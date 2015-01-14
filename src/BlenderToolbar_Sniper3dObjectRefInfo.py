@@ -105,6 +105,12 @@ class OBJECT_OT_Sniper3dInfoButton(bpy.types.Operator):
             self.exportTarget(myobj)
             for obj in bpy.context.selected_objects:
                 self.exportTarget(obj)
+        if(self.number==11):
+            print("\n\n\n\n**************** TARGTES CSV ***************")
+            myobj=bpy.context.active_object
+            self.exportTargetInfoCSV(myobj)
+            for obj in bpy.context.selected_objects:
+                self.exportTargetInfoCSV(obj)
         return{'FINISHED'}    
     def exportTarget(self,obj):
         print('/* ',obj.name,'  */')
@@ -129,6 +135,14 @@ class OBJECT_OT_Sniper3dInfoButton(bpy.types.Operator):
         ',"y":',round(aZ,5),
         ',"z":',round(aY,5),'}')
         print('},')
+        return{'FINISHED'}
+    def exportTargetInfoCSV(self,obj):
+        data=obj.name+';'
+        data+=(str(obj.location.x)+';')
+        data+=(str(obj.location.y)+';')
+        data+=(str(obj.location.z)+';')
+        #print(obj.name,',',obj.location.x,',',obj.location.y,',',obj.location.z,',')
+        print(data)
         return{'FINISHED'}
       
         
@@ -170,6 +184,11 @@ class SniperObjectInfoPanel(bpy.types.Panel):
         col=layout.column(align=True)
         col.label(text="Export Selected Targets")
         col.operator('sniper3d.infobutton',text='Export Selected Sniper Targets').number=10
+        
+        row=layout.row()
+        col=layout.column(align=True)
+        col.label(text="Export CSV Targets")
+        col.operator('sniper3d.infobutton',text='Export CSV Targets Info').number=11
         
         
         
