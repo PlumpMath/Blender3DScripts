@@ -111,6 +111,10 @@ class OBJECT_OT_Sniper3dInfoButton(bpy.types.Operator):
             self.exportTargetInfoCSV(myobj)
             for obj in bpy.context.selected_objects:
                 self.exportTargetInfoCSV(obj)
+        if(self.number==20):
+            print("\n\n\n\n**************** COLLISION SHAPE ***************")
+            myobj=bpy.context.active_object
+            self.exportCollisionShape(myobj)
         return{'FINISHED'}    
     def exportTarget(self,obj):
         print('/* ',obj.name,'  */')
@@ -144,7 +148,21 @@ class OBJECT_OT_Sniper3dInfoButton(bpy.types.Operator):
         #print(obj.name,',',obj.location.x,',',obj.location.y,',',obj.location.z,',')
         print(data)
         return{'FINISHED'}
-      
+    def exportCollisionShape(self,obj):
+        print('/* ',obj.name,' */')
+        print('{')
+        print('    "comment": "',obj.name,'",')
+        print('    "id": ,')
+        print('    "type":"btBoxShape",')
+        print('    "btBoxShape":{')
+        print('       "boxHalfExtents":{')
+        print('           "x":',round(obj.scale.x,5),',')
+        print('           "y":',round(obj.scale.z,5),',')
+        print('           "z":',round(obj.scale.y,5))
+        print('       }')
+        print('    }')
+        print('}')
+        return('FINISH')
         
 
 class SniperObjectInfoPanel(bpy.types.Panel):
@@ -189,6 +207,11 @@ class SniperObjectInfoPanel(bpy.types.Panel):
         col=layout.column(align=True)
         col.label(text="Export CSV Targets")
         col.operator('sniper3d.infobutton',text='Export CSV Targets Info').number=11
+        
+        ow=layout.row()
+        col=layout.column(align=True)
+        col.label(text="Export Collision btBoxShape")
+        col.operator('sniper3d.infobutton',text='Export Collision btBoxShape Info').number=20
         
         
         
