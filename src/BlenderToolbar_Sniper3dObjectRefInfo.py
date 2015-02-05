@@ -175,42 +175,25 @@ class SniperObjectInfoPanel(bpy.types.Panel):
     def draw(self, context):
         layout=self.layout
         
-        #row=layout.row()
-        #row.label(text="Print Full Blender Space Info")
-        #row=layout.row()
-        #row.operator("sniper3d.infobutton",text="Full Obj Blender space info").number=1
         
         row=layout.row()
-        col = layout.column(align=True)
-        col.label(text="Print full reference")
-        col.label(text="Sniper3D Space Info")
-        col.operator("sniper3d.infobutton",text="Full obj Sniper3D space info").number=2
-
-        row=layout.row()
-        col = layout.column(align=True)
+        col=row.box()
         col.label(text="Print Sniper3D Space Info")
-        col.label(text="Coordinates only")
-        col.operator("sniper3d.infobutton",text="Pos obj Sniper3D space info").number=4
+        col.operator("sniper3d.infobutton",text="Sniper3D space Full OBJ Info").number=2
+        col.operator("sniper3d.infobutton",text="Sniper3D space Coordinates only").number=4
         
-        row=layout.row()
-        col = layout.column(align=True)
         col.label(text="Print Blender Space Info")
-        col.label(text="Coordinates only")
-        col.operator("sniper3d.infobutton",text="Pos Obj Blender space info").number=3
+        col.operator("sniper3d.infobutton",text="Blender space info Pos coordinates only").number=3
+        
+        row=layout.row()
+        box=row.box()
+        box.label(text="Targets Info")
+        box.operator('sniper3d.infobutton',text='Export Selected Sniper Targets').number=10
+        box.operator('sniper3d.infobutton',text='Export CSV Targets Info').number=11
         
         row=layout.row()
         col=layout.column(align=True)
-        col.label(text="Export Selected Targets")
-        col.operator('sniper3d.infobutton',text='Export Selected Sniper Targets').number=10
-        
-        row=layout.row()
-        col=layout.column(align=True)
-        col.label(text="Export CSV Targets")
-        col.operator('sniper3d.infobutton',text='Export CSV Targets Info').number=11
-        
-        ow=layout.row()
-        col=layout.column(align=True)
-        col.label(text="Export Collision btBoxShape")
+        col.label(text="Export Collision btBoxShape Sniper3D space")
         col.operator('sniper3d.infobutton',text='Export Collision btBoxShape Info').number=20
         
         
