@@ -115,6 +115,14 @@ class OBJECT_OT_Sniper3dInfoButton(bpy.types.Operator):
             print("\n\n\n\n**************** COLLISION SHAPE ***************")
             myobj=bpy.context.active_object
             self.exportCollisionShape(myobj)
+            for obj in bpy.context.selected_objects:
+                self.exportCollisionShape(obj)
+        if(self.number==21):
+            print("\n\n\n\n**************** SCENE RIGID BODIES ***************")
+            myobj=bpy.context.active_object
+            self.exportRigidBodies(myobj)
+            for obj in bpy.context.selected_objects:
+                self.exportRigidBodies(obj)
         return{'FINISHED'}    
     def exportTarget(self,obj):
         print('/* ',obj.name,'  */')
@@ -161,7 +169,32 @@ class OBJECT_OT_Sniper3dInfoButton(bpy.types.Operator):
         print('           "z":',round(obj.scale.y,5))
         print('       }')
         print('    }')
-        print('}')
+        print('},')
+        return('FINISH')
+    def exportRigidBodies(self,obj):
+        print('/* ',obj.name,' */')
+        print('{')
+        print('    "btbodyid": ,')
+        print('    "score":0,')
+        pX=obj.location.x
+        pY=obj.location.y
+        pZ=obj.location.z
+        aX=math.degrees(obj.rotation_euler[0])
+        aY=math.degrees(obj.rotation_euler[1])
+        aZ=math.degrees(obj.rotation_euler[2])
+        ppY=0-pY
+        print('    "position":{')
+        print('        "x":',round(pX,5),',')
+        print('        "y":',round(pZ,5),',')
+        print('        "z":',round(ppY,5),)
+        print('    },')
+        print('    "rotation":{"x":',round(aX,5),
+        ',"y":',round(aZ,5),
+        ',"z":',round(aY,5),'},')
+        print('    "collisionshapeid": ,')
+        print('    "mass":0,')
+        print('    "inertia":{"x":0,"y":0,"z":0}')
+        print('},')
         return('FINISH')
         
 
@@ -175,28 +208,34 @@ class SniperObjectInfoPanel(bpy.types.Panel):
     def draw(self, context):
         layout=self.layout
         
+        #row=layout.row()
+        #row.label(text="Print Full Blender Space Info")
+        #row=layout.row()
+        #row.operator("sniper3d.infobutton",text="Full Obj Blender space info").number=1
         
         row=layout.row()
-        col=row.box()
-        col.label(text="Print Sniper3D Space Info")
-        col.operator("sniper3d.infobutton",text="Sniper3D space Full OBJ Info").number=2
-        col.operator("sniper3d.infobutton",text="Sniper3D space Coordinates only").number=4
+        #col = layout.column(align=True)
+        box=row.box()
+        box.label(text="Print Sniper3D Space Info")
+        box.operator("sniper3d.infobutton",text="Sniper3D space Full OBJ Info").number=2
+        box.operator("sniper3d.infobutton",text="Sniper3D space Coordinates only").number=4
+        box.label(text="Print Blender Space Info")
+        box.operator("sniper3d.infobutton",text="Blender space info Pos coordinates only").number=3
         
-        col.label(text="Print Blender Space Info")
-        col.operator("sniper3d.infobutton",text="Blender space info Pos coordinates only").number=3
+        row=layout.row()
+        #col=layout.column(align=True)
+        box=row.box()
+        box.label(text="Export Collision btBoxShapes and")
+        box.label(text="RigidBodies in Sniper3D space")
+        box.operator('sniper3d.infobutton',text='Export Collision btBoxShapes').number=20
+        #box.label(text='Export Scene3D rigid bodies')
+        box.operator('sniper3d.infobutton',text='Export Scene3D Rigid Bodies').number=21
         
         row=layout.row()
         box=row.box()
         box.label(text="Targets Info")
         box.operator('sniper3d.infobutton',text='Export Selected Sniper Targets').number=10
         box.operator('sniper3d.infobutton',text='Export CSV Targets Info').number=11
-        
-        row=layout.row()
-        col=layout.column(align=True)
-        col.label(text="Export Collision btBoxShape Sniper3D space")
-        col.operator('sniper3d.infobutton',text='Export Collision btBoxShape Info').number=20
-        
-        
         
 def register():
     bpy.utils.register_class(OBJECT_OT_Sniper3dInfoButton)
