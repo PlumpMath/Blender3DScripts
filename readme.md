@@ -24,5 +24,14 @@ Select 3d object and press some buttons on toolpallet, the information is printe
 Information about objects I'm using in my project and it not useful for most people. 
 But you can see ho create own toolbar in blender.
 
-Script can be writen and edited in script layout. 	 
+Script can be writen and edited in script layout. 	
+
+
+Copyand Paste object  coordinates panel
+---------------------------------------
+Panel allow to coy and paste object coordinates in 'XYZ' space and euler angles.
+Panel is not blender addons, panel is not registered automaticly.
+
+	Copy and Paste Panel is started from scripts layout manually.
+	Select panel script and press button RUN.
 	 
