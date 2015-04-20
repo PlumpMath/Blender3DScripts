@@ -22,7 +22,7 @@ bl_info={
     "tracker_url": "", 
     "author": "Alexander Bigel"
 }
-A
+
 def initCopyPastePanelProperties(scn):
     """defien properties for panel"""
     bpy.types.Scene.CopyPastePanelLocationBool=BoolProperty(
